@@ -33,8 +33,7 @@ export default function LoginPage() {
   function handleOnChange(e) {
     const inputName = e.target.name;
     const inputValue = e.target.value;
-    const newObj = { ...formData, [inputName]: inputValue };
-    setFormData(newObj);
+    setFormData({ ...formData, [inputName]: inputValue });
   }
 
   return (
