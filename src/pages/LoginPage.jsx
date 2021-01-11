@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { FormStyled } from "../styles/HeadingStyled";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -38,17 +39,22 @@ export default function LoginPage() {
 
   return (
     <div>
-      <form onSubmit={handleOnSubmit}>
-        <label>Email</label>
+      <FormStyled onSubmit={handleOnSubmit}>
+        <label>Email: </label>
         <input name="email" value={formData.email} onChange={handleOnChange} />
-        <label>Password</label>
+
+        <label>Password: </label>
         <input
           name="password"
+          type="password"
           value={formData.password}
           onChange={handleOnChange}
         />
-        <button type="submit">Log In</button>
-      </form>
+
+        <button className="btn-secondary btn" type="submit">
+          Log In
+        </button>
+      </FormStyled>
     </div>
   );
 }

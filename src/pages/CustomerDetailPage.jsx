@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
+import NavBar from "../components/NavBar";
 
 export default function CustomerDetailPage(props) {
   const customerId = props.match.params.id;
@@ -37,6 +38,7 @@ export default function CustomerDetailPage(props) {
 
   return (
     <div>
+      <NavBar />
       <h1>Customer Detail Page</h1>
       {customerItem ? (
         <div>

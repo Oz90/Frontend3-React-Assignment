@@ -9,15 +9,6 @@ import CustomerUpdatePage from "./pages/CustomerUpdatePage";
 function App() {
   return (
     <div>
-      <ul>
-        <li>
-          <Link to="/customers">Customers</Link>
-        </li>
-        <li>
-          <Link to="/customers/create">Create Customer</Link>
-        </li>
-      </ul>
-
       <Switch>
         <Route path="/login">
           <LoginPage />

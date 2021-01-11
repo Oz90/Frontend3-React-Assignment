@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import NavBar from "../components/NavBar";
 
 export default function CustomerCreatePage() {
   const [formData, setFormData] = useState({});
@@ -40,6 +41,7 @@ export default function CustomerCreatePage() {
 
   return (
     <div>
+      <NavBar />
       <h1>Create Customer</h1>
       <form onSubmit={handleOnSubmit}>
         {renderInput("name", "Customer Name")}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CustomerListItem from "../components/CustomerListItem";
+import NavBar from "../components/NavBar";
 
 export default function CustomerListPage() {
   const [customerList, setCustomerList] = useState([]);
@@ -23,6 +24,7 @@ export default function CustomerListPage() {
 
   return (
     <div>
+      <NavBar />
       {customerList.map((item, index) => {
         return <CustomerListItem key={item.id} customerData={item} />;
       })}
