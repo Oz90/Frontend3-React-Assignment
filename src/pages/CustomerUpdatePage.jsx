@@ -1,44 +1,54 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import { useFetch } from "../utilities/useFetch";
+import HandleOnSubmit from "../utilities/HandleOnSubmit";
 
 export default function CustomerUpdatePage(props) {
   const customerId = props.match.params.id;
   const [formData, setFormData] = useState({});
   const history = useHistory();
+  const url = `https://frebi.willandskill.eu/api/v1/customers/${customerId}/`;
+  const token = localStorage.getItem("WEBB20");
 
-  function getCustomerItem() {
-    const url = `https://frebi.willandskill.eu/api/v1/customers/${customerId}/`;
-    const token = localStorage.getItem("WEBB20");
-    fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
-    })
-      .then(res => res.json())
-      .then(data => setFormData(data));
-  }
+  const getCustomerItem = useFetch(url, token);
 
-  useEffect(() => {
-    getCustomerItem();
-  }, []);
+  // function getCustomerItem() {
+  //   const url = `https://frebi.willandskill.eu/api/v1/customers/${customerId}/`;
+  //   const token = localStorage.getItem("WEBB20");
+  //   fetch(url, {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${token}`
+  //     }
+  //   })
+  //     .then(res => res.json())
+  //     .then(data => setFormData(data));
+  // }
 
-  function handleOnSubmit(e) {
-    e.preventDefault();
-    const url = `https://frebi.willandskill.eu/api/v1/customers/${customerId}/`;
-    const token = localStorage.getItem("WEBB20");
-    fetch(url, {
-      method: "PUT",
-      body: JSON.stringify(formData),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
-    })
-      .then(res => res.json())
-      .then(data => history.push(`/customers/${customerId}`));
-  }
+  // useEffect(() => {
+  //   getCustomerItem();
+  // }, []);
+
+  const submit = e => {
+    HandleOnSubmit(e, url, token, formData, customerId, history);
+  };
+
+  // function handleOnSubmit(e) {
+  //   e.preventDefault();
+  //   const url = `https://frebi.willandskill.eu/api/v1/customers/${customerId}/`;
+  //   const token = localStorage.getItem("WEBB20");
+  //   fetch(url, {
+  //     method: "PUT",
+  //     body: JSON.stringify(formData),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${token}`
+  //     }
+  //   })
+  //     .then(res => res.json())
+  //     .then(data => history.push(`/customers/${customerId}`));
+  // }
 
   function renderInput(name, label, type) {
     return (
@@ -53,6 +63,7 @@ export default function CustomerUpdatePage(props) {
       </div>
     );
   }
+
   function handleOnChange(e) {
     const name = e.target.name;
     const value = e.target.value;
@@ -63,7 +74,7 @@ export default function CustomerUpdatePage(props) {
     <div>
       <NavBar />
       <h1>Update Customer</h1>
-      <form onSubmit={handleOnSubmit}>
+      <form onSubmit={submit}>
         {renderInput("name", "Customer Name")}
         {renderInput("email", "Customer Email", "email")}
         {renderInput("organisationNr", "Organization Number")}
