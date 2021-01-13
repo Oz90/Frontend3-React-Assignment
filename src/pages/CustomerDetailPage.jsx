@@ -14,6 +14,7 @@ export default function CustomerDetailPage(props) {
   const deleteCustomer = e => {
     postPutDeleteHandler(e, url, token, doMethod, myData, customerId, history);
   };
+  
 
   return (
     <div>

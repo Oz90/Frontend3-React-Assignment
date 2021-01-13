@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import CustomerListItem from "../components/CustomerListItem";
 import NavBar from "../components/NavBar";
+import { UserContext } from "../context/UserContext";
 
 export default function CustomerListPage() {
-  const [customerList, setCustomerList] = useState([]);
-  const [me, setMe] = useState([]);
+  //const [customerList, setCustomerList] = useState([]);
+  // const [me, setMe] = useState([]);
+  const { me, setMe } = useContext(UserContext);
+  const { customerList, setCustomerList } = useContext(UserContext);
 
   function getMe() {
     const url = "https://frebi.willandskill.eu/api/v1/me/";
