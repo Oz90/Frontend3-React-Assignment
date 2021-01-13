@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import postPutDeleteHandler from "../utilities/postPutDeleteHandler";
 
 export default function CustomerCreatePage() {
   const [formData, setFormData] = useState({});
   const history = useHistory();
+  const url = "https://frebi.willandskill.eu/api/v1/customers/";
+  const token = localStorage.getItem("WEBB20");
+  const doMethod = "POST";
+  const myData = formData;
+  const customerId = null;
+  const submitHandler = e => {
+    postPutDeleteHandler(e, url, token, doMethod, myData, customerId, history);
+  };
 
   function handleOnChange(e) {
     const name = e.target.name;
@@ -21,29 +30,11 @@ export default function CustomerCreatePage() {
     );
   }
 
-  function handleOnSubmit(e) {
-    e.preventDefault();
-    const url = "https://frebi.willandskill.eu/api/v1/customers/";
-    const token = localStorage.getItem("WEBB20");
-    fetch(url, {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
-    })
-      .then(res => res.json())
-      .then(data => {
-        history.push("/customers");
-      });
-  }
-
   return (
     <div>
       <NavBar />
       <h1>Create Customer</h1>
-      <form onSubmit={handleOnSubmit}>
+      <form onSubmit={submitHandler}>
         {renderInput("name", "Customer Name")}
         {renderInput("email", "Customer Email", "email")}
         {renderInput("organisationNr", "Organization Number")}
