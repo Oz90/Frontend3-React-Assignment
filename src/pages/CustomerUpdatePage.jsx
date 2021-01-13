@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { useFetch } from "../utilities/useFetch";
-import HandleOnSubmit from "../utilities/HandleOnSubmit";
+import postPutDeleteHandler from "../utilities/postPutDeleteHandler";
 
 export default function CustomerUpdatePage(props) {
   const customerId = props.match.params.id;
@@ -10,45 +10,20 @@ export default function CustomerUpdatePage(props) {
   const history = useHistory();
   const url = `https://frebi.willandskill.eu/api/v1/customers/${customerId}/`;
   const token = localStorage.getItem("WEBB20");
-
+  const doMethod = "PUT";
+  const myData = formData;
   const getCustomerItem = useFetch(url, token);
-
-  // function getCustomerItem() {
-  //   const url = `https://frebi.willandskill.eu/api/v1/customers/${customerId}/`;
-  //   const token = localStorage.getItem("WEBB20");
-  //   fetch(url, {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${token}`
-  //     }
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => setFormData(data));
-  // }
-
-  // useEffect(() => {
-  //   getCustomerItem();
-  // }, []);
-
-  const submit = e => {
-    HandleOnSubmit(e, url, token, formData, customerId, history);
+  const submitHandler = e => {
+    postPutDeleteHandler(
+      e,
+      url,
+      token,
+      doMethod,
+      myData,
+      customerId,
+      history
+    );
   };
-
-  // function handleOnSubmit(e) {
-  //   e.preventDefault();
-  //   const url = `https://frebi.willandskill.eu/api/v1/customers/${customerId}/`;
-  //   const token = localStorage.getItem("WEBB20");
-  //   fetch(url, {
-  //     method: "PUT",
-  //     body: JSON.stringify(formData),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${token}`
-  //     }
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => history.push(`/customers/${customerId}`));
-  // }
 
   function renderInput(name, label, type) {
     return (
@@ -74,7 +49,7 @@ export default function CustomerUpdatePage(props) {
     <div>
       <NavBar />
       <h1>Update Customer</h1>
-      <form onSubmit={submit}>
+      <form onSubmit={submitHandler}>
         {renderInput("name", "Customer Name")}
         {renderInput("email", "Customer Email", "email")}
         {renderInput("organisationNr", "Organization Number")}
