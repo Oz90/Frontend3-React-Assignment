@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import NavBar from "../components/NavBar";
-import { useFetch } from "../utilities/useFetch";
 import postPutDeleteHandler from "../utilities/postPutDeleteHandler";
 import renderInput from "../utilities/renderInput";
 
@@ -14,7 +13,21 @@ export default function CustomerUpdatePage(props) {
   const token = localStorage.getItem("WEBB20");
   const doMethod = "PUT";
   const myData = formData;
-  const getCustomerItem = useFetch(url, token);
+
+  function getCustomerItem() {
+    fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => res.json())
+      .then(data => setFormData(data));
+  }
+
+  useEffect(() => {
+    getCustomerItem();
+  }, []);
 
   const submitHandler = e => {
     if (isVatValid === true) {
@@ -28,7 +41,7 @@ export default function CustomerUpdatePage(props) {
         history
       );
     } else {
-      prompt("Invalid VAT number.");
+      alert("Did you fill out the form correctly? Check the VAT Number.");
     }
   };
 

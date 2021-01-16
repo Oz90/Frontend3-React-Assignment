@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import CustomerListItem from "../components/CustomerListItem";
 import NavBar from "../components/NavBar";
 import { UserContext } from "../context/UserContext";
+import { useFetch } from "../utilities/useFetch";
+import { HeadingOneStyled, HeadingTwoStyled } from "../styles/HeadingStyled";
 
 export default function CustomerListPage() {
   //const [customerList, setCustomerList] = useState([]);
@@ -21,6 +23,7 @@ export default function CustomerListPage() {
       .then(res => res.json())
       .then(data => setMe(data));
   }
+  console.log(customerList);
 
   function getCustomerList() {
     const url = "https://frebi.willandskill.eu/api/v1/customers/";
@@ -44,11 +47,13 @@ export default function CustomerListPage() {
     <div>
       <NavBar />
       <div className="container justify-content-center align-items-center mb-5">
-        <h5 className="text-center">
-          Welcome back,
+        <div className="text-center">
+          <HeadingOneStyled> Welcome back,</HeadingOneStyled>
           <br />
-          {me.firstName} {me.lastName} ({me.email}).
-        </h5>
+          <HeadingTwoStyled>
+            {me.firstName} {me.lastName} ({me.email}).
+          </HeadingTwoStyled>
+        </div>
       </div>
       {customerList.map((item, index) => {
         return <CustomerListItem key={item.id} customerData={item} />;

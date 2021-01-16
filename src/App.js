@@ -13,11 +13,10 @@ function App() {
 
   return (
     <div>
-      <UserContext.Provider value={{ me, setMe, customerList, setCustomerList }}>
+      <UserContext.Provider
+        value={{ me, setMe, customerList, setCustomerList }}
+      >
         <Switch>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
           <Route path="/customers/create">
             <CustomerCreatePage />
           </Route>
@@ -25,6 +24,9 @@ function App() {
           <Route path="/customers/:id" component={CustomerDetailPage} />
           <Route path="/customers">
             <CustomerListPage />
+          </Route>
+          <Route path="/">
+            <LoginPage />
           </Route>
         </Switch>
       </UserContext.Provider>

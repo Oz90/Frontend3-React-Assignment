@@ -26,7 +26,7 @@ export default function CustomerCreatePage() {
         history
       );
     } else {
-      prompt("Invalid VAT number.");
+      alert("Did you fill out the form correctly? Check the VAT Number.");
     }
   };
 
@@ -86,7 +86,6 @@ export default function CustomerCreatePage() {
         {renderInput("website", "Website", "url", handleOnChange, formData)}
         <button type="submit">Create Customer</button>
       </form>
-      <code>{JSON.stringify(formData)}</code>
     </div>
   );
 }

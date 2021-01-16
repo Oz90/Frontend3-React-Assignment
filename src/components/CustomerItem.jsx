@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function CustomerItem({ props, deleteCustomer }) {
   const customerId = props.match.params.id;
   const [customerItem, setCustomerItem] = useState();
-  
+
   function getCustomerItem() {
     const url = `https://frebi.willandskill.eu/api/v1/customers/${customerId}/`;
     const token = localStorage.getItem("WEBB20");

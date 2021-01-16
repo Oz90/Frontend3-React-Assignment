@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { FormStyled } from "../styles/HeadingStyled";
+import { FormStyled } from "../styles/FormStyled";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -8,7 +8,6 @@ export default function LoginPage() {
     password: "javascriptoramverk"
   });
   const history = useHistory();
-  console.log(history);
 
   function handleOnSubmit(e) {
     e.preventDefault();
