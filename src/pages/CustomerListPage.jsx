@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import CustomerListItem from "../components/CustomerListItem";
 import NavBar from "../components/NavBar";
 import { UserContext } from "../context/UserContext";
-import { useFetch } from "../utilities/useFetch";
 import { HeadingOneStyled, HeadingTwoStyled } from "../styles/HeadingStyled";
 
 export default function CustomerListPage() {
@@ -11,7 +10,7 @@ export default function CustomerListPage() {
   const { me, setMe } = useContext(UserContext);
   const { customerList, setCustomerList } = useContext(UserContext);
 
-  function getMe() {
+  function myInfo() {
     const url = "https://frebi.willandskill.eu/api/v1/me/";
     const token = localStorage.getItem("WEBB20");
     fetch(url, {
@@ -23,7 +22,6 @@ export default function CustomerListPage() {
       .then(res => res.json())
       .then(data => setMe(data));
   }
-  console.log(customerList);
 
   function getCustomerList() {
     const url = "https://frebi.willandskill.eu/api/v1/customers/";
@@ -40,7 +38,7 @@ export default function CustomerListPage() {
 
   useEffect(() => {
     getCustomerList();
-    getMe();
+    myInfo();
   }, []);
 
   return (
@@ -55,9 +53,34 @@ export default function CustomerListPage() {
           </HeadingTwoStyled>
         </div>
       </div>
-      {customerList.map((item, index) => {
-        return <CustomerListItem key={item.id} customerData={item} />;
-      })}
+      <div className="container">
+        <table className="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th scope="col" className="text-center">
+                #
+              </th>
+              <th scope="col" className="text-center">
+                Name
+              </th>
+              <th scope="col" className="text-center">
+                VAT Number
+              </th>
+              <th scope="col" className="text-center">
+                Website
+              </th>
+              <th scope="col" className="text-center">
+                EDIT / DELETE
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {customerList.map((item, index) => {
+              return <CustomerListItem key={item.id} customerData={item} />;
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

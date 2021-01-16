@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { IconContext } from "react-icons";
 
 export default function CustomerListItem({ customerData }) {
@@ -20,41 +20,27 @@ export default function CustomerListItem({ customerData }) {
   }
 
   return (
-    <table className="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Name</th>
-          <th scope="col">VAT Number</th>
-          <th scope="col">Website</th>
-          <th scope="col">EDIT/DELETE</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">{customerData.id}</th>
-          <td>
-            <Link to={`/customers/${customerData.id}`}>
-              {customerData.name}
-            </Link>
-          </td>
-          <td>{customerData.vatNr}</td>
-          <td>{customerData.website}</td>
-          <td>
-            <button>
-              <Link to={`/customers/${customerData.id}/edit`}>
-                <AiFillEdit size={25} />
-              </Link>
-            </button>
-            /
-            <button onClick={deleteCustomer}>
-              <IconContext.Provider value={{ color: "red" }}>
-                <AiFillDelete size={25} />
-              </IconContext.Provider>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <tr>
+      <th scope="row" className="text-center">
+        {customerData.id}
+      </th>
+      <td className="text-center">
+        <Link to={`/customers/${customerData.id}`}>{customerData.name}</Link>
+      </td>
+      <td className="text-center">{customerData.vatNr}</td>
+      <td className="text-center">{customerData.website}</td>
+      <td className="text-center">
+        <button>
+          <Link to={`/customers/${customerData.id}/edit`}>
+            <AiOutlineEdit size={25} />
+          </Link>
+        </button>
+        <button onClick={deleteCustomer}>
+          <IconContext.Provider value={{ color: "red" }}>
+            <AiOutlineDelete size={25} />
+          </IconContext.Provider>
+        </button>
+      </td>
+    </tr>
   );
 }
