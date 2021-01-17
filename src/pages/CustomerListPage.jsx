@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import CustomerListItem from "../components/CustomerListItem";
 import NavBar from "../components/NavBar";
+import { useHistory } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { HeadingOneStyled, HeadingTwoStyled } from "../styles/HeadingStyled";
 
@@ -9,6 +10,7 @@ export default function CustomerListPage() {
   // const [me, setMe] = useState([]);
   const { me, setMe } = useContext(UserContext);
   const { customerList, setCustomerList } = useContext(UserContext);
+  const history = useHistory();
 
   function myInfo() {
     const url = "https://frebi.willandskill.eu/api/v1/me/";
@@ -40,6 +42,11 @@ export default function CustomerListPage() {
     getCustomerList();
     myInfo();
   }, []);
+
+  function logOutHandler() {
+    localStorage.removeItem("WEBB20");
+    history.push("/");
+  }
 
   return (
     <div>
@@ -80,6 +87,11 @@ export default function CustomerListPage() {
             })}
           </tbody>
         </table>
+      </div>
+      <div className="container">
+        <button className="btn btn-primary" onClick={logOutHandler}>
+          Log Out
+        </button>
       </div>
     </div>
   );
